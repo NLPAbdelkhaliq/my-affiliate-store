@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import Image from 'next/image';
+
+export const dynamic = 'force-dynamic';
 
 interface Offer {
   merchant: string;
@@ -20,7 +21,6 @@ interface Product {
   offers: Offer[];
 }
 
-// دالة لجلب المنتجات من ملف الـ JSON
 function getProducts(): Product[] {
   try {
     const filePath = path.join(process.cwd(), 'src/data/products.json');
@@ -37,7 +37,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8 text-right" dir="rtl">
       <div className="max-w-7xl mx-auto">
-        
         {/* عنوان الموقع */}
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">
@@ -51,19 +50,23 @@ export default function Home() {
         {/* شبكة عرض المنتجات */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => {
-            const bestOffer = product.offers && product.offers.length > 0 ? product.offers[0] : null;
+            const bestOffer =
+              product.offers && product.offers.length > 0 ? product.offers[0] : null;
 
             return (
-              <div 
+              <div
                 key={product.slug}
                 className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between transition-all hover:shadow-md"
               >
                 <div>
                   {/* صورة المنتج */}
                   <div className="relative h-64 bg-gray-100 overflow-hidden flex items-center justify-center p-4">
-                    <img 
-                      src={product.image || 'https://m.media-amazon.com/images/I/619oqSJVY5L._AC_SL1500_.jpg'} 
-                      alt={product.title} 
+                    <img
+                      src={
+                        product.image ||
+                        'https://m.media-amazon.com/images/I/619oqSJVY5L._AC_SL1500_.jpg'
+                      }
+                      alt={product.title}
                       className="object-contain h-full w-full transition-transform duration-300 hover:scale-105"
                     />
                   </div>
@@ -87,7 +90,10 @@ export default function Home() {
                   <div>
                     <span className="text-xs text-gray-400 block">يبدأ من</span>
                     <span className="text-xl font-black text-gray-900">
-                      {bestOffer ? bestOffer.price.toLocaleString() : 'غير متوفر'} <span className="text-xs font-normal text-gray-600">{bestOffer ? bestOffer.currency : ''}</span>
+                      {bestOffer ? bestOffer.price.toLocaleString() : 'غير متوفر'}{' '}
+                      <span className="text-xs font-normal text-gray-600">
+                        {bestOffer ? bestOffer.currency : ''}
+                      </span>
                     </span>
                   </div>
 
@@ -105,12 +111,10 @@ export default function Home() {
                     <span className="text-xs text-red-500 font-medium">غير متاح حالياً</span>
                   )}
                 </div>
-
               </div>
             );
           })}
         </div>
-
       </div>
     </main>
   );
