@@ -3,6 +3,8 @@ import path from 'path';
 
 export const dynamic = 'force-dynamic';
 
+const AFFILIATE_TAG = 'abdelkhaliqst-21';
+
 interface Offer {
   merchant: string;
   price: number;
@@ -29,6 +31,12 @@ function getProducts(): Product[] {
   } catch {
     return [];
   }
+}
+
+function withAffiliateTag(url: string): string {
+  if (!url) return '#';
+  const cleanUrl = url.split('?')[0];
+  return `${cleanUrl}?tag=${AFFILIATE_TAG}`;
 }
 
 export default function Home() {
@@ -100,7 +108,7 @@ export default function Home() {
                   {/* زر قارن الأسعار ليفتح رابط أمازون بالأفلييت مباشرة */}
                   {bestOffer && bestOffer.affiliateUrl ? (
                     <a
-                      href={bestOffer.affiliateUrl}
+                      href={withAffiliateTag(bestOffer.affiliateUrl)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-xl transition shadow-sm"
