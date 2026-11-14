@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-export const dynamic = 'force-dynamic';
+
 
 const AFFILIATE_TAG = 'abdelkhaliqst-21';
 
