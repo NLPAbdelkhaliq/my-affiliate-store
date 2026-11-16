@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
@@ -18,6 +19,8 @@ export const metadata: Metadata = {
   description: "اعرف أرخص سعر لمنتجك ووفر فلوسك مع كل عملية شراء من أمازون مصر.",
 };
 
+const ADSENSE_CLIENT_ID = "ca-pub-6099169515632033";
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -25,6 +28,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       dir="rtl"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         {children}
         <Analytics />
